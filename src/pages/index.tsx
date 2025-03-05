@@ -17,7 +17,6 @@ export default function IndexPage() {
         <Tab key="single" title="Single Process" />
         <Tab key="batch" title="Batch Process" />
       </Tabs>
-
       {activeTab === "single" && <SingleProcess />}
       {activeTab === "batch" && <BatchProcess />}
     </DefaultLayout>

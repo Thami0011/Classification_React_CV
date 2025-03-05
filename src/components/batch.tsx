@@ -3,6 +3,24 @@ import { useState } from "react";
 
 const BatchProcess = () => {
   const [selectedFiles, setSelectedFile] = useState<File[] | null>(null);
+
+  const handleClick = () => {
+    const input = document.createElement("input");
+    input.accept = ".pdf";
+    input.multiple = true;
+    input.type = "file";
+    input.style.display = "none";
+    input.addEventListener("change", (event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.files?.length) {
+        setSelectedFile(Array.from(target.files));
+      }
+    });
+    document.body.appendChild(input);
+    input.click();
+    document.body.removeChild(input);
+  };
+
   const handleUpload = async () => {
     try {
       const formData = new FormData();
@@ -25,7 +43,14 @@ const BatchProcess = () => {
       console.error(error);
     }
   };
-  return <div>batch process</div>;
+  return (
+    <>
+      <button onClick={selectedFiles ? handleUpload : handleClick}>
+        Upload
+      </button>
+      {selectedFiles && <div>files : {selectedFiles?.length}</div>}
+    </>
+  );
 };
 
 export default BatchProcess;
